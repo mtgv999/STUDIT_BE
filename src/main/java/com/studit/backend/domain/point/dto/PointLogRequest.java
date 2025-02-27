@@ -1,6 +1,7 @@
 package com.studit.backend.domain.point.dto;
 import com.studit.backend.domain.point.PointLogType;
 import com.studit.backend.domain.point.entity.PointLog;
+import com.studit.backend.domain.user.entity.User;
 import lombok.*;
 
 @Getter
@@ -11,7 +12,7 @@ import lombok.*;
 
 public class PointLogRequest {//포인트 로그
     private Long userId;
-    private Long roomId;
+    private Long studyId;
     private Long paymentId;
 
     private Long changePoint;//변동 포인트
@@ -22,13 +23,18 @@ public class PointLogRequest {//포인트 로그
     private Long totalPoint;//총 포인트
     private PointLogType pointLogType;//포인트 로그 종류
 
-    public static PointLog pointLogForm(PointLogRequest pointLogRequest){
-        return PointLog.builder().userId(pointLogRequest.getUserId())
-                .roomId(pointLogRequest.getRoomId())
-                .paymentId(pointLogRequest.getPaymentId())
+    public PointLog pointLogForm(User user){
+        return PointLog.builder()
+                .userId(this.userId)
+                .studyId(this.studyId)
+                .paymentId(this.paymentId)
 
-                .totalWithdrawPoint(pointLogRequest.getTotalWithdrawPoint())
-                .totalRewardPoint(pointLogRequest.getTotalRewardPoint())
-                .totalDeductPoint(pointLogRequest.getTotalDeductPoint())
-                .totalPoint(pointLogRequest.getTotalPoint())
-                .pointLogType(pointLogRequest.getPointLogType()).build();}}
+                .changePoint(this.changePoint)
+                .totalWithdrawPoint(this.totalWithdrawPoint)
+                .totalRewardPoint(this.totalRewardPoint)
+
+                .totalDeductPoint(this.totalDeductPoint)
+                .totalPoint(this.totalPoint)
+                .user(user)
+                .pointLogType(this.pointLogType)
+                .build();}}
